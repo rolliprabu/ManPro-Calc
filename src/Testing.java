@@ -1,5 +1,23 @@
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import DataTemp.testclass;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+
 
 /**
  *
@@ -13,6 +31,12 @@ public class Testing extends javax.swing.JFrame {
     int a1,a2,a3,a4,ar;
     int b1,b2,b3,b4,br;
             
+    ArrayList<String> testlol = new ArrayList<>();
+    ArrayList<testclass>lowl = new ArrayList<>();
+
+    String namasiswa;
+    int nilai1, nilai2, nilai3;
+    
     public Testing() {
         initComponents();
     }
@@ -73,6 +97,7 @@ public class Testing extends javax.swing.JFrame {
         jSlider3 = new javax.swing.JSlider();
         jLabel12 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -491,6 +516,13 @@ public class Testing extends javax.swing.JFrame {
             }
         });
 
+        jButton3.setText("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -501,13 +533,17 @@ public class Testing extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(38, Short.MAX_VALUE))
@@ -614,6 +650,108 @@ public class Testing extends javax.swing.JFrame {
         }*/
     }//GEN-LAST:event_jSlider2StateChanged
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        testlol.add("wkwk");
+        testlol.add("wwww");
+        testlol.add("kkkk");
+        testlol.add("5555");
+        testlol.add("jaja");
+        
+        testclass test1 = new testclass("aa", 10, 10, 10);
+        testclass test2 = new testclass("bb", 100, 100, 101);
+        testclass test3 = new testclass("cc", 99, 92, 93);
+        testclass test4 = new testclass("ab", 1010, 10, 2020);
+        testclass test5 = new testclass("dd", 10000, 90, 10);
+        
+        lowl.add(test1);
+        lowl.add(test2);
+        lowl.add(test3);
+        lowl.add(test4);
+        lowl.add(test5);    
+        
+        HSSFSheet fSheet = null;
+        
+        try {
+            HSSFWorkbook fWorkbook = new HSSFWorkbook();
+            fSheet = fWorkbook.createSheet("buat test");
+            HSSFFont sheetTitleFont = fWorkbook.createFont();
+            File file = new File("D:\\testbrowkwk.xls");
+            HSSFCellStyle cellStyle = fWorkbook.createCellStyle();
+
+            sheetTitleFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD); 
+
+            HSSFRow header1 = fSheet.createRow(0);
+                    
+            for(int i = 0; i<7; i++){
+                HSSFCell header = header1.createCell((short) i);
+                if(i==0){
+                    header.setCellValue("Nama Siswa");
+                }
+                if(i==1){
+                    header.setCellValue("Quality");
+                }
+                if(i==2){
+                    header.setCellValue("Quantity");
+                }
+                if(i==3){
+                    header.setCellValue("Timeliness");
+                }
+                if(i==4){
+                    header.setCellValue("Level");
+                }
+                if(i==5){
+                    header.setCellValue("Nilai Total");
+                }
+                if(i==6){
+                    header.setCellValue("Contribution");
+                }
+                header.setCellStyle(cellStyle);
+            }
+            
+            for (int i = 1; i < lowl.size()+1; i++) {
+                HSSFRow fRow = fSheet.createRow((short) i);
+                for (int j = 0; j < 4; j++) {
+                    HSSFCell cell = fRow.createCell((short) j);
+                    switch (j) {
+                        case 0:
+                            cell.setCellValue(lowl.get(i-1).getNama());
+                            break;
+                        case 1:
+                            cell.setCellValue(lowl.get(i-1).getNilai1());
+                            break;
+                        case 2:
+                            cell.setCellValue(lowl.get(i-1).getNilai2());
+                            break;
+                        case 3:
+                            cell.setCellValue(lowl.get(i-1).getNilai3());
+                            break;
+                        default:
+                            break;
+                    }
+                    //cell.setCellValue(lowl.get(i).toString());
+                    cell.setCellStyle(cellStyle);
+                }
+            }
+            
+            FileOutputStream fileOutputStream;
+            fileOutputStream = new FileOutputStream(file);
+            BufferedOutputStream bos = new BufferedOutputStream(fileOutputStream);
+            fWorkbook.write(bos);
+            bos.close();
+            fileOutputStream.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+
+        
+        
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    @Override
+    public String toString(){
+        return namasiswa+" "+nilai1+" "+nilai2+" "+nilai3;
+    }
     /**
      * @param args the command line arguments
      */
@@ -657,6 +795,7 @@ public class Testing extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup4;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -699,4 +838,5 @@ public class Testing extends javax.swing.JFrame {
     private javax.swing.JSlider jSlider3;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
 }
